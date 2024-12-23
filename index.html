@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamp Tabbar</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Lamp Tabbar">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            padding: 24px;
+            text-align: center;
+        }
+        main {
+            flex: 1;
+            overflow: auto;
+            padding: 24px;
+        }
+        .content-box {
+            background-color: rgba(28, 28, 29, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        nav {
+            border-top: 1px solid #363636;
+            background-color: rgba(28, 28, 29, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .tabbar {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+        .tab {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab i {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .tab span {
+            font-size: 14px;
+        }
+        .active {
+            color: var(--active-color);
+            filter: drop-shadow(0 0 8px var(--active-color));
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lamp Tabbar 💡</h1>
+    </header>
+
+    <main>
+        <div class="content-box">
+            <p>Lamp Tabbar is a tab bar with multi-colored highlights.</p>
+            <p>It replicates the functionality without using any framework.</p>
+        </div>
+        <div class="content-box" id="tab-content">
+            <h2>Home</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, eos?</p>
+        </div>
+    </main>
+
+    <nav>
+        <div class="tabbar">
+            <div class="tab active" data-tab="home" data-color="rgb(0, 255, 255)">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="tab" data-tab="inbox" data-color="rgb(0, 255, 0)">
+                <i class="fas fa-envelope"></i>
+                <span>Inbox</span>
+            </div>
+            <div class="tab" data-tab="calendar" data-color="rgb(255, 255, 0)">
+                <i class="fas fa-calendar"></i>
+                <span>Calendar</span>
+            </div>
+            <div class="tab" data-tab="upload" data-color="rgb(255, 0, 255)">
+                <i class="fas fa-upload"></i>
+                <span>Upload</span>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const tabContent = document.getElementById('tab-content');
+
+        const tabData = {
+            home: {
+                title: "Home",
+                content: "Welcome to the home section. Enjoy your stay!",
+            },
+            inbox: {
+                title: "Inbox",
+                content: "Check your latest messages and emails here.",
+            },
+            calendar: {
+                title: "Calendar",
+                content: "View your upcoming events and schedules.",
+            },
+            upload: {
+                title: "Upload",
+                content: "Upload your files quickly and easily from here.",
+            }
+        };
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.documentElement.style.setProperty('--active-color', tab.dataset.color);
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const selectedTab = tab.dataset.tab;
+                tabContent.innerHTML = `
+                    <h2>${tabData[selectedTab].title}</h2>
+                    <p>${tabData[selectedTab].content}</p>
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>
